@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Herb Search</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(246, 249, 246, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .search-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        .search-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: #333;
+            font-size: 14px;
+            outline: none;
+            background-color: white;
+            height: 40px;
+        }
+
+        .search-btn {
+            flex: 1;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            background: #45a049;
+        }
+
+        .output-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 1200px;
+            text-align: left; /* Align text to the left */
+        }
+
+        .herb-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px; /* Space between herb info blocks */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .herb-name {
+            color: #333;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            margin: 10px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">AYUSH Virtual Herbal Garden</div>
+        <ul class="nav-menu">
+            <li><a href="dashboard.html">Home</a></li>
+            <li><a href="advanced-search.html" class="active">Advanced Search</a></li>
+            <li><a href="#">Story</a></li>
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+    </div>
+    <div class="search-container">
+        <h2>Advanced Search</h2>
+        <div class="search-controls">
+            <select id="category">
+                <option value="">Select Category</option>
+                <option value="Yoga & Naturopathy">Yoga & Naturopathy</option>
+                <option value="Ayurveda">Ayurveda</option>
+                <option value="Traditional Medicine">Traditional Medicine</option>
+                <option value="Chinese Medicine">Chinese Medicine</option>
+                <option value="Herbal Medicine">Herbal Medicine</option>
+            </select>
+            <select id="part">
+                <option value="">Select Plant Part</option>
+                <option value="Stem">Stem</option>
+                <option value="Leaf">Leaf</option>
+                <option value="Root">Root</option>
+                <option value="Flower">Flower</option>
+                <option value="Seed">Seed</option>
+                <option value="Bark">Bark</option>
+            </select>
+            <select id="country">
+                <option value="">Select Region</option>
+                <option value="India">India</option>
+                <option value="China">China</option>
+                <option value="USA">USA</option>
+                <option value="Europe">Europe</option>
+                <option value="Japan">Japan</option>
+                <option value="South America">South America</option>
+            </select>
+            <select id="purpose">
+                <option value="">Select Purpose</option>
+                <option value="Digestion">Digestion</option>
+                <option value="Immunity">Immunity</option>
+                <option value="Healing">Healing</option>
+                <option value="Respiratory">Respiratory</option>
+                <option value="Mental Health">Mental Health</option>
+                <option value="Pain Relief">Pain Relief</option>
+            </select>
+            <button class="search-btn" onclick="searchHerbs()">Search</button>
+        </div>
+        <div class="error-message" id="errorMessage">Please fill in all fields before searching.</div>
+        <div class="loading" id="loading">Searching for herbs...</div>
+    </div>
+    <div class="output-container" id="outputBox"></div>
+    <button onclick="generateAgain()" id="generateAgainBtn" style="display: none;">Generate Again</button>
+
+    <script>
+        async function searchHerbs() {
+            const category = document.getElementById('category').value;
+            const part = document.getElementById('part').value;
+            const country = document.getElementById('country').value;
+            const purpose = document.getElementById('purpose').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const loading = document.getElementById('loading');
+            const generateAgainBtn = document.getElementById('generateAgainBtn');
+
+            // Validate all fields are filled
+            if (!category || !part || !country || !purpose) {
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            errorMessage.style.display = 'none';
+            loading.style.display = 'block';
+            document.getElementById('outputBox').innerHTML = "";
+    
+            try {
+                const response = await fetch("http://localhost:5000/api/search", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ category, part, country, purpose })
+                });
+    
+                const data = await response.json();
+    
+                if (data.success) {
+                    // Display herbs directly from the server response
+                    const herbs = data.data;
+                    const outputBox = document.getElementById('outputBox');
+                    
+                    outputBox.innerHTML = herbs.map(herb => `
+                        <div class="herb-info">
+                            <div class="herb-name">${herb.name} (${herb.scientificName})</div>
+                            <p>${herb.description}</p>
+                        </div>
+                    `).join('');
+                    
+                    generateAgainBtn.style.display = 'block';
+                } else {
+                    document.getElementById('outputBox').innerHTML = "No results found. Please try different search criteria.";
+                }
+            } catch (error) {
+                document.getElementById('outputBox').innerHTML = "Error connecting to the server. Please try again later.";
+                console.error("API Error:", error);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    
+        function generateAgain() {
+            searchHerbs();
+        }
+    </script>
+</body>
+</html>

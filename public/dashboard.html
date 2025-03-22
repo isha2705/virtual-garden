@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script>
+        // पेज लोड होने से पहले लॉगिन चेक
+        if (!localStorage.getItem('currentUser') || !JSON.parse(localStorage.getItem('currentUser')).isLoggedIn) {
+            window.location.replace('login.html');
+        }
+    </script>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">AYUSH Virtual Herbal Garden</div>
+        <ul class="nav-menu">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="advanced-search.html">Advanced Search</a></li>
+           
+            <li><a href="#">Story</a></li>
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+    </div>
+    <div class="dashboard-content">
+        <h1>Discover AYUSH Medicinal Plants</h1>
+        <p>Explore our virtual herbal garden and uncover the healing power of plants used in Ayurveda, Yoga & Naturopathy, Unani, Siddha, and Homeopathy.</p>
+      
+        <div class="medicinal-plants-section">
+            <h2>Popular Medicinal Plants</h2>
+            <div class="plants-grid">
+                <div class="plant-card">
+                    <img src="tulsi.jpg" alt="Tulsi">
+                    <h3>Tulsi (Holy Basil)</h3>
+                    <p>Known for its anti-inflammatory and antioxidant properties</p>
+                </div>
+                <div class="plant-card">
+                    <img src="aloe-vera.jpg" alt="Aloe Vera">
+                    <h3>Aloe Vera</h3>
+                    <p>Famous for skin healing and digestive benefits</p>
+                </div>
+                <div class="plant-card">
+                    <img src="ashvagandha.jpeg" alt="Ashwagandha">
+                    <h3>Ashwagandha</h3>
+                    <p>Adaptogen known for stress relief and energy</p>
+                </div>
+                <div class="plant-card">
+                    <img src="neem.jpg" alt="Neem">
+                    <h3>Neem</h3>
+                    <p>Natural purifier with antibacterial properties</p>
+                </div>
+                <div class="plant-card">
+                    <img src="brahmi.jpeg" alt="Brahmi">
+                    <h3>Brahmi</h3>
+                    <p>Memory enhancer and brain tonic</p>
+                </div>
+                <div class="plant-card">
+                    <img src="giloy.jpeg" alt="Giloy">
+                    <h3>Giloy</h3>
+                    <p>Immunity booster and fever reducer</p>
+                </div>
+                <div class="plant-card">
+                    <img src="lemongrass.jpeg" alt="Lemongrass">
+                    <h3>Lemongrass</h3>
+                    <p>Natural remedy for digestive issues and anxiety</p>
+                </div>
+                <div class="plant-card">
+                    <img src="pudina.jpeg" alt="Mint">
+                    <h3>Pudina (Mint)</h3>
+                    <p>Digestive aid and natural coolant</p>
+                </div>
+                <div class="plant-card">
+                    <img src="sage.jpeg" alt="Sage">
+                    <h3>Sage</h3>
+                    <p>Memory enhancer and anti-inflammatory herb</p>
+                </div>
+                <div class="plant-card">
+                    <img src="rosemary.jpeg" alt="Rosemary">
+                    <h3>Rosemary</h3>
+                    <p>Improves memory and blood circulation</p>
+                </div>
+                <div class="plant-card">
+                    <img src="calendula.jpeg" alt="Calendula">
+                    <h3>Calendula</h3>
+                    <p>Skin healing and wound treatment</p>
+                </div>
+                <div class="plant-card">
+                    <img src="lavender.jpeg" alt="Lavender">
+                    <h3>Lavender</h3>
+                    <p>Promotes relaxation and better sleep</p>
+                </div>
+                <div class="plant-card">
+                    <img src="thyme.jpeg" alt="Thyme">
+                    <h3>Thyme</h3>
+                    <p>Natural antiseptic and respiratory health</p>
+                </div>
+                <div class="plant-card">
+                    <img src="stevia.jpeg" alt="Stevia">
+                    <h3>Stevia</h3>
+                    <p>Natural sweetener and diabetes-friendly herb</p>
+                </div>
+                <div class="plant-card">
+                    <img src="chamomile.jpeg" alt="Chamomile">
+                    <h3>Chamomile</h3>
+                    <p>Calming properties and sleep aid</p>
+                </div>
+                <div class="plant-card">
+                    <img src="echinacea.jpeg" alt="Echinacea">
+                    <h3>Echinacea</h3>
+                    <p>Immune system booster</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>
